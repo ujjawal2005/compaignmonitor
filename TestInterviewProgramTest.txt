@@ -1,0 +1,133 @@
+Java
+
+REQUIREMENT 1.
+
+private static boolean isNullOrEmpty(String input){
+	return !(input!=null && input.length()>0);
+}
+
+REQUIREMENT 2.
+
+private static List<Integer> getSetOfDivisors(int input) {
+	List<Integer> list = new ArrayList<Integer>();
+	list.add(1);// 1 is common divisor of all numbers
+	for (int i = 2; i <= input; i++) {
+		long z = input % i;
+		if (z != 0)
+			continue;
+		else
+			list.add(i);
+	}
+	return list;
+}
+
+REQUIREMENT 3.
+
+private static Double calculateArea(int a, int b, int c){
+	if(a>=0 && b>=0 && c>=0 && isTriangleValid(a,b,c)){
+	double area=0.0;
+	double s= (a+b+c)/2;
+	area = Math.sqrt(s * (s - a) * (s - b) * (s - c));
+	return area;
+	}
+	else{
+		throw new InvalidTriangleException("Invalid Triangle");
+	}
+}
+
+private static boolean isTriangleValid(int a, int b, int c) {
+	if ((a + b) > c && (a + c) > b && (b + c) > a) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+REQUIREMENT 4.
+
+private static List<Integer> filterCommonInteger(List<Integer> inputList){
+	List<Integer> commonIntegerList=new ArrayList<Integer>();
+	Map<Integer, Integer> numberMap = new HashMap<>();
+	inputList.stream().forEach((key) -> {
+		if(numberMap.get(key)==null){
+			numberMap.put(key, 1);
+		} else{
+			int times=numberMap.get(key);
+			numberMap.put(key, times+1);
+		}
+	});
+	
+	//sorting the map in descending order of values
+	Map<Integer,Integer> sortedNumberMap = numberMap.entrySet().stream()
+			.sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+			.collect(Collectors.toMap(
+			    Map.Entry::getKey, 
+			    Map.Entry::getValue, 
+			    (x,y)-> {throw new AssertionError();},
+			    LinkedHashMap::new
+    ));
+	
+	//storing the top positions in the final list
+	int maxPosition =0;
+	for (Map.Entry<Integer, Integer> entry : sortedNumberMap.entrySet()) {
+		if(maxPosition==0 || maxPosition== entry.getValue()){
+			maxPosition=entry.getValue();
+			commonIntegerList.add(entry.getKey());
+		}
+	}
+	return commonIntegerList;
+}
+
+JAVASCRIPT:
+
+REQUIREMENT 5:
+
+function startsWith(str, prefix) {
+    return str.indexOf(prefix) === 0;
+}
+
+function endsWith(str, suffix) {
+    return str.match(suffix+"$")==suffix;
+}
+
+REQUIREMENT 6:
+
+See the html "require-3.html(requirehtml folder)" [jquery part to load the json]
+
+
+SQL:
+
+REQUIREMENT 7:
+
+a. Return the names of all salespeople that have an order with "George"
+
+select a.name from salesperson a inner join orders b on a.salespersonid=b.salespersonid inner join customer c on c.customerid=b.customerid where c.name='George' order by a.salespersonid;
+
+b.Return the names of all salespeople that do not have any order with George
+
+select name from salesperson where salespersonid not in (select salespersonid from orders where customerid in (select customerid from customer where name='George'))
+
+c.Return the names of salespeople that have 2 or more orders.
+
+select name from salesperson where salespersonid in (select salespersonid from orderst group by salespersonid having count(*)>1);
+
+
+
+REQUIREMENT 8:
+
+a.Return the name of the salesperson with the 3rd highest salary.
+
+SELECT name FROM salesperson ORDER BY salary DESC LIMIT 2,1;
+
+b.
+
+c.Return the total Amount of orders for each month, ordered by year, then month (both in descending order)
+
+
+REQUIREMENT 9:-
+GITHUB
+
+See the html(github folder) : github.html, github.js
+
+
+
